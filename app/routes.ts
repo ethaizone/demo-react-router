@@ -9,6 +9,8 @@ import {
 export default [
   layout("layout.tsx", [
     index("routes/home.tsx"),
+    route("stream", "routes/stream.tsx"),
+    route("stream-resource", "routes/stream-resource.tsx"),
     ...prefix("users", [
       index("routes/users/index.tsx"),
       route(":id", "routes/users/item.tsx"),
