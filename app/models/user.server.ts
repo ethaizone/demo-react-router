@@ -11,7 +11,7 @@ export async function getUsers() {
   }
 }
 
-export async function getUserById(id: number) {
+export async function getUserById(id: User["id"]) {
   try {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
@@ -31,7 +31,7 @@ export async function createUser(user: NewUser) {
   }
 }
 
-export async function updateUser(id: number, user: Partial<NewUser>) {
+export async function updateUser(id: User["id"], user: Partial<NewUser>) {
   try {
     const [updatedUser] = await db
       .update(users)
@@ -45,7 +45,7 @@ export async function updateUser(id: number, user: Partial<NewUser>) {
   }
 }
 
-export async function deleteUser(id: number) {
+export async function deleteUser(id: User["id"]) {
   try {
     await db.delete(users).where(eq(users.id, id));
   } catch (error: any) {
