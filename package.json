@@ -6,9 +6,13 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
+    "start:ci": "react-router build && react-router-serve ./build/server/index.js --port 3000",
     "typecheck": "react-router typegen && tsc",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "test:e2e": "concurrently -k -s first \"npm run dev\" \"wait-on http://localhost:5173 && playwright test\"",
+    "test:e2e:ui": "concurrently -k -s first \"npm run dev\" \"wait-on http://localhost:5173 && playwright test --ui\"",
+    "test:e2e:headed": "playwright test --headed"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.3.0",
@@ -24,6 +28,9 @@
   },
   "devDependencies": {
     "@react-router/dev": "^7.6.0",
+    "@playwright/test": "^1.48.2",
+    "concurrently": "^9.1.2",
+    "wait-on": "^8.0.1",
     "@tailwindcss/vite": "^4.1.6",
     "@types/node": "^22",
     "@types/react": "^19.1.3",

@@ -14,6 +14,8 @@
 - `npm run dev`: Start dev server with HMR via React Router + Vite.
 - `npm run build`: Build server/client bundles to `build/`.
 - `npm run start`: Serve the built app (`build/server/index.js`).
+- `npm run test:e2e`: Run Playwright E2E tests against the dev server (launches dev + tests via `concurrently`; waits for `http://localhost:5173`). Exits cleanly even though dev server receives SIGTERM (code 143).
+- `npm run test:e2e:ui`: Same as above but opens Playwright UI.
 - `npm run typecheck`: Generate types and run TypeScript.
 - `npm run db:generate`: Generate Drizzle migrations from schema.
 - `npm run db:push`: Apply schema to the database.
@@ -27,9 +29,13 @@
 - Imports: use alias `~/` for `app/` (see `tsconfig.json`).
 
 ## Testing Guidelines
-- No test runner is configured yet. When adding tests, prefer Vitest + React Testing Library.
-- Suggested patterns: colocate `*.test.ts(x)` next to modules; keep unit tests fast and deterministic.
-- Aim for coverage on route loaders/actions and critical UI states.
+- End-to-end: Playwright is configured in `playwright.config.ts`; specs live in `e2e/`.
+  - Tests run against the dev server on `http://localhost:5173` using `concurrently` and `wait-on`.
+  - Command: `npm run test:e2e` (or `:ui`). The dev server will be terminated by `concurrently` after tests; exit code 143 is expected and treated as success.
+  - Tip: To isolate the DB during E2E, run with `DATABASE_URL=./pgdata-e2e npm run test:e2e`.
+- Unit/integration: When adding unit tests, prefer Vitest + React Testing Library.
+  - Colocate `*.test.ts(x)` next to modules; keep tests fast and deterministic.
+  - Prioritize loaders/actions and critical UI states.
 
 ## Commit & Pull Request Guidelines
 - Commits: Conventional Commits (e.g., `feat: add stream demo`, `docs: update README`).

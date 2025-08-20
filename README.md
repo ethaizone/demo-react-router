@@ -57,3 +57,30 @@ Create a production build:
 ```bash
 npm run build
 ```
+
+## End-to-End Testing
+
+This repo includes Playwright for E2E tests that exercise real route logic (loaders/actions, DB, SSR).
+
+- Install Playwright and browsers:
+
+```bash
+npm install
+npx playwright install
+```
+
+- Run tests (builds app and serves on port 3000):
+
+```bash
+npm run test:e2e
+```
+
+- Open the Playwright UI:
+
+```bash
+npm run test:e2e:ui
+```
+
+Notes:
+- Tests run the built server via `npm run start:ci` and isolate the database using `DATABASE_URL=./pgdata-e2e`.
+- Example specs live in `e2e/` and cover the home page and basic Users CRUD.

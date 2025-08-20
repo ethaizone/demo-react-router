@@ -7,3 +7,10 @@
 
 
 /pgdata
+/# Playwright
+/playwright-report/
+/test-results/
+/blob-report/
+
+# E2E DB
+/pgdata-e2e
